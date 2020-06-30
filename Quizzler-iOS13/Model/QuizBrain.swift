@@ -25,12 +25,38 @@ struct QuizBrain {
     ]
     
     var questionNumber = 0
+    var score = 0
     
-    //internval vs. external parameters in Swift
+    func getQuestiontext() -> String {
+        return quiz[questionNumber].text
+    }
     
-    
-    func checkAnswer(userAnswer: String) {
+    mutating func getScore() -> Int {
+        return score
+    }
         
+        
+    func getProgress() -> Float {
+        let progress = Float(questionNumber + 1) / Float(quiz.count)
+        return progress
+    }
+    
+    mutating func nextQuestion(){
+        if questionNumber + 1  < quiz.count {
+            questionNumber += 1
+        } else {
+            questionNumber = 0
+            score = 0
+        }
+    }
+    
+    mutating func checkAnswer(_ userAnswer: String) -> Bool {
+        if userAnswer == quiz[questionNumber].answer {
+            score += 1
+            return true
+        } else {
+            return false
+        }
     }
     
 }
